@@ -175,3 +175,218 @@ body {
   border: 2px solid var(--border);
   border-radius: 6px;
 }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   Custom Login Page — dark-blue + starfield + glass card
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Root container */
+.sr-login-page {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #060b16;
+}
+
+/* Dark-blue gradient background */
+.sr-login-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 60% at 10% 20%, rgba(37, 99, 235, 0.35), transparent 50%),
+    radial-gradient(ellipse 60% 50% at 90% 10%, rgba(59, 130, 246, 0.25), transparent 45%),
+    radial-gradient(ellipse 70% 55% at 70% 85%, rgba(29, 78, 216, 0.3), transparent 50%),
+    radial-gradient(ellipse 50% 40% at 20% 80%, rgba(96, 165, 250, 0.15), transparent 45%),
+    linear-gradient(160deg, #060b16 0%, #0a1628 40%, #0c1a30 100%);
+}
+
+/* Subtle grid overlay */
+.sr-login-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image:
+    linear-gradient(rgba(96, 165, 250, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(96, 165, 250, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Starfield container */
+.sr-login-stars {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.sr-star {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(147, 197, 253, 0.9), rgba(59, 130, 246, 0.3) 40%, transparent 70%);
+  animation-name: sr-star-blink;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes sr-star-blink {
+  0%, 100% { opacity: 0.15; transform: scale(0.85); }
+  50%      { opacity: 0.9;  transform: scale(1.15); }
+}
+
+/* Floating blue orbs */
+.sr-login-orbs {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.sr-orb {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.55), rgba(37, 99, 235, 0.22) 45%, transparent 72%);
+  filter: blur(40px);
+  opacity: 0.5;
+}
+
+.sr-orb-1 { width: 300px; height: 300px; top: -70px; left: -80px; animation: sr-orb-float-1 22s ease-in-out infinite, sr-orb-pulse-1 8s ease-in-out infinite; }
+.sr-orb-2 { width: 240px; height: 240px; top: 35%; right: -70px; animation: sr-orb-float-2 26s ease-in-out infinite, sr-orb-pulse-2 10s ease-in-out infinite; }
+.sr-orb-3 { width: 260px; height: 260px; bottom: -80px; left: 25%; animation: sr-orb-float-3 24s ease-in-out infinite, sr-orb-pulse-3 9s ease-in-out infinite; }
+.sr-orb-4 { width: 200px; height: 200px; top: 15%; left: 15%; animation: sr-orb-float-4 28s ease-in-out infinite, sr-orb-pulse-4 11s ease-in-out infinite; }
+
+@keyframes sr-orb-float-1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(15px,10px) scale(1.03); } }
+@keyframes sr-orb-float-2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-18px,-12px) scale(1.04); } }
+@keyframes sr-orb-float-3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(20px,-15px) scale(1.03); } }
+@keyframes sr-orb-float-4 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-12px,18px) scale(1.05); } }
+
+@keyframes sr-orb-pulse-1 { 0%,100% { opacity: 0.45; } 50% { opacity: 0.75; } }
+@keyframes sr-orb-pulse-2 { 0%,100% { opacity: 0.55; } 50% { opacity: 0.30; } }
+@keyframes sr-orb-pulse-3 { 0%,100% { opacity: 0.40; } 50% { opacity: 0.70; } }
+@keyframes sr-orb-pulse-4 { 0%,100% { opacity: 0.50; } 50% { opacity: 0.25; } }
+
+/* Center wrapper */
+.sr-login-wrap {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 360px;
+  padding: 20px;
+}
+
+/* Glass card */
+.sr-login-box {
+  background: linear-gradient(90deg, rgba(8,32,62,0.85), rgba(14,28,38,0.85));
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 20px;
+  padding: 36px 32px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.12);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* Logo */
+.sr-login-logo {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.sr-login-title {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  font-weight: 900;
+  color: #3b82f6;
+  letter-spacing: 0.1em;
+  margin: 0;
+}
+
+.sr-login-sub {
+  font-size: 11px;
+  color: rgba(255,255,255,0.42);
+  margin-top: 6px;
+}
+
+/* Password input */
+.sr-login-box input[type="password"],
+.sr-login-box input[type="text"] {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(96,165,250,0.18);
+  background: rgba(12,22,42,0.65);
+  color: rgba(255,255,255,0.94);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.sr-login-box input[type="password"]:focus,
+.sr-login-box input[type="text"]:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+}
+
+.sr-login-box input::placeholder {
+  color: rgba(255,255,255,0.3);
+}
+
+/* Login button */
+.sr-login-box button[type="submit"] {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #3b82f6, #60a5fa);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 0 16px rgba(59,130,246,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.sr-login-box button[type="submit"]:hover:not(:disabled) {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 0 24px rgba(59,130,246,0.4);
+}
+
+.sr-login-box button[type="submit"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Labels */
+.sr-login-box label {
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(147,197,253,0.85);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: block;
+  margin-bottom: 6px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .sr-star, .sr-orb {
+    animation: none;
+  }
+}
