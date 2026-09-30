@@ -12,8 +12,6 @@ import * as React from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "./lib/auth";
 import { AppLayout } from "./components/layout/app-layout";
-import { Spinner } from "./components/spinner";
-import { RailLogo } from "./components/rail-logo";
 import SetupPage from "./pages/setup";
 import LoginPage from "./pages/login";
 import DashboardPage from "./pages/dashboard";
