@@ -12,6 +12,7 @@ interface AuthState {
   isOwner: boolean;
   refresh: () => Promise<void>;
   login: (username: string, password: string) => Promise<void>;
+  loginPassword: (password: string) => Promise<void>;
   setup: (username: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
 }
@@ -73,6 +74,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     },
     [refresh],
   );
+  
+    const loginPassword = React.useCallback(
+    async (p: string) => {
+      await api.loginPassword(p);
+      await refresh();
+    },
+    [refresh],
+  );
 
   const setup = React.useCallback(
     async (u: string, p: string) => {
@@ -106,6 +115,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isOwner: admin?.role === "owner",
         refresh,
         login,
+        loginPassword,
         setup,
         logout,
       }}
