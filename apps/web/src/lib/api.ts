@@ -55,6 +55,11 @@ export const api = {
       method: "POST",
       body: JSON.stringify({ username, password }),
     }),
+    loginPassword: (password: string) =>
+    request<{ ok: boolean }>("/api/login-password", {
+      method: "POST",
+      body: JSON.stringify({ password }),
+    }),
   logout: () => request<{ ok: boolean }>("/api/logout", { method: "POST" }),
   me: () => request<{ admin: import("./types").AdminInfo }>("/api/me"),
   system: () => request<import("./types").SystemStats>("/api/system"),
