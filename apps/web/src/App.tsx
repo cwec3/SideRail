@@ -85,17 +85,31 @@ function LoaderStars() {
     if (!el) return;
     if (el.dataset.mounted === "1") return;
     el.dataset.mounted = "1";
-    const N = 40;
-    let html = "";
+
+    // Stars (bigger + more)
+    const N = 80;
+    let stars = "";
     for (let i = 0; i < N; i++) {
-      const size = (Math.random() * 2 + 1).toFixed(1);
+      const size = (Math.random() * 3 + 1.5).toFixed(1);
       const top = (Math.random() * 100).toFixed(2);
       const left = (Math.random() * 100).toFixed(2);
       const dur = (Math.random() * 3 + 2).toFixed(2);
       const delay = (Math.random() * 4).toFixed(2);
-      html += `<span class="sr-star" style="width:${size}px;height:${size}px;top:${top}%;left:${left}%;animation-duration:${dur}s;animation-delay:${delay}s"></span>`;
+      stars += `<span class="sr-star" style="width:${size}px;height:${size}px;top:${top}%;left:${left}%;animation-duration:${dur}s;animation-delay:${delay}s"></span>`;
     }
-    el.innerHTML = html;
+
+    // Shooting stars (شهاب‌سنگ‌ها)
+    let shooting = "";
+    const shootingCount = 3;
+    for (let i = 0; i < shootingCount; i++) {
+      const top = (Math.random() * 40).toFixed(2);
+      const left = (Math.random() * 40 + 60).toFixed(2);
+      const dur = (Math.random() * 2 + 3).toFixed(2);
+      const delay = (i * 4 + Math.random() * 3).toFixed(2);
+      shooting += `<span class="sr-shooting-star" style="top:${top}%;left:${left}%;animation-duration:${dur}s;animation-delay:${delay}s"></span>`;
+    }
+
+    el.innerHTML = stars + `<div class="sr-shooting-stars">${shooting}</div>`;
   }, []);
   return <div className="sr-login-stars" ref={ref} />;
 }
