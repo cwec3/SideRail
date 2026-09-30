@@ -8,6 +8,7 @@
  * branding, or the embedded authorship identifiers is prohibited.
  * Watermark: sr-icubaby-2025-9f4c1a7e
  */
+import * as React from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "./lib/auth";
 import { AppLayout } from "./components/layout/app-layout";
@@ -52,19 +53,53 @@ function RequirePerm({ perm, children }: { perm: string; children: React.ReactNo
 
 function FullscreenLoader() {
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center gap-4">
-      <div className="grid h-16 w-16 animate-[pop-in_0.4s_ease-out] place-items-center rounded-base border-2 border-border bg-main text-mtext neo-shadow animate-float">
-        <RailLogo className="h-9 w-9" />
+    <div className="sr-login-page">
+      <div className="sr-login-bg" />
+      <div className="sr-login-grid" />
+      <LoaderStars />
+      <div className="sr-login-orbs">
+        <span className="sr-orb sr-orb-1" />
+        <span className="sr-orb sr-orb-2" />
+        <span className="sr-orb sr-orb-3" />
+        <span className="sr-orb sr-orb-4" />
       </div>
-      <div className="text-center">
-        <div className="font-heading text-2xl tracking-tight">SideRail</div>
-        <div className="mt-1 flex items-center justify-center gap-2 text-sm text-text/60">
-          <Spinner className="h-4 w-4" />
-          Loading…
+      <div className="sr-login-wrap">
+        <div className="sr-login-box" style={{ textAlign: "center" }}>
+          <h1 className="sr-login-title">エムエムディー</h1>
+          <p className="sr-login-sub" style={{ marginBottom: 20 }}>
+            Loading…
+          </p>
+          <div className="sr-loader-dots">
+            <span />
+            <span />
+            <span />
+          </div>
         </div>
       </div>
     </div>
   );
+}
+
+function LoaderStars() {
+  const ref = React.useRef<HTMLDivElement | null>(null);
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (el.dataset.mounted === "1") return;
+    el.dataset.mounted = "1";
+    const N = 40;
+    let html = "";
+    for (let i = 0; i < N; i++) {
+      const size = (Math.random() * 2 + 1).toFixed(1);
+      const top = (Math.random() * 100).toFixed(2);
+      const left = (Math.random() * 100).toFixed(2);
+      const dur = (Math.random() * 3 + 2).toFixed(2);
+      const delay = (Math.random() * 4).toFixed(2);
+      html += `<span class="sr-star" style="width:${size}px;height:${size}px;top:${top}%;left:${left}%;animation-duration:${dur}s;animation-delay:${delay}s"></span>`;
+    }
+    el.innerHTML = html;
+  }, []);
+  return <div className="sr-login-stars" ref={ref} />;
 }
 
 export default function App() {
