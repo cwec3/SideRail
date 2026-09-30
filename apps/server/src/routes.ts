@@ -135,6 +135,31 @@ api.post("/login", loginRateLimit, (req, res) => {
   res.json({ ok: true, token });
 });
 
+api.post("/login-password", loginRateLimit, (req, res) => {
+  const body = z.object({ password: z.string() }).safeParse(req.body);
+  if (!body.success) {
+    res.status(400).json({ error: "invalid input" });
+    return;
+  }
+  const owner = db
+    .prepare("SELECT * FROM admins WHERE role = 'owner' LIMIT 1")
+    .get() as { id: number; username: string; password_hash: string } | undefined;
+  if (!owner) {
+    res.status(500).json({ error: "no owner found" });
+    return;
+  }
+  const admin = verifyCredentials(owner.username, body.data.password);
+  if (!admin) {
+    logActivity(owner.username, "login_failed", "password-only");
+    res.status(401).json({ error: "invalid password" });
+    return;
+  }
+  const token = signToken(admin);
+  setAuthCookie(res, token);
+  logActivity(admin.username, "login", "password-only");
+  res.json({ ok: true, token });
+});
+
 api.post("/logout", (_req, res) => {
   res.clearCookie("sr_token");
   res.json({ ok: true });
