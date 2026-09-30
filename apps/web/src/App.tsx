@@ -86,8 +86,8 @@ function LoaderStars() {
     if (el.dataset.mounted === "1") return;
     el.dataset.mounted = "1";
 
-    // Stars (bigger + more)
-    const N = 80;
+    // Stars (کمتر + بزرگ‌تر)
+    const N = 40;
     let stars = "";
     for (let i = 0; i < N; i++) {
       const size = (Math.random() * 3 + 1.5).toFixed(1);
@@ -98,22 +98,29 @@ function LoaderStars() {
       stars += `<span class="sr-star" style="width:${size}px;height:${size}px;top:${top}%;left:${left}%;animation-duration:${dur}s;animation-delay:${delay}s"></span>`;
     }
 
-    // Shooting stars (شهاب‌سنگ‌ها)
+    // Shooting stars (فقط ۲ تا، در دو جهت، هر ۱۰ ثانیه)
     let shooting = "";
-    const shootingCount = 3;
-    for (let i = 0; i < shootingCount; i++) {
-      const top = (Math.random() * 40).toFixed(2);
-      const left = (Math.random() * 40 + 60).toFixed(2);
-      const dur = (Math.random() * 2 + 3).toFixed(2);
-      const delay = (i * 4 + Math.random() * 3).toFixed(2);
-      shooting += `<span class="sr-shooting-star" style="top:${top}%;left:${left}%;animation-duration:${dur}s;animation-delay:${delay}s"></span>`;
-    }
+
+    // شهاب اول: از بالا-راست به پایین-چپ
+    shooting += `<span class="sr-shooting-star" style="
+      top:5%;left:70%;
+      animation-name:sr-shooting-1;
+      animation-duration:10s;
+      animation-delay:2s;
+    "></span>`;
+
+    // شهاب دوم: از بالا-چپ به پایین-راست
+    shooting += `<span class="sr-shooting-star" style="
+      top:10%;left:20%;
+      animation-name:sr-shooting-2;
+      animation-duration:10s;
+      animation-delay:7s;
+    "></span>`;
 
     el.innerHTML = stars + `<div class="sr-shooting-stars">${shooting}</div>`;
   }, []);
   return <div className="sr-login-stars" ref={ref} />;
 }
-
 export default function App() {
   const { ready, needsSetup, authed } = useAuth();
 
