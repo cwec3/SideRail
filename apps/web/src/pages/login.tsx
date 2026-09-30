@@ -1,90 +1,79 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { LogIn, User, Lock, Eye, EyeOff, ShieldCheck, Zap, Globe2 } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { AuthShell } from "@/components/layout/auth-layout";
 import { useAuth } from "@/lib/auth";
 import { useToast } from "@/components/ui/toast";
-import { useI18n } from "@/lib/i18n";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 export default function LoginPage() {
-  const { login } = useAuth();
+  const { loginPassword } = useAuth();
   const toast = useToast();
-  const { t } = useI18n();
   const navigate = useNavigate();
-  const [username, setUsername] = React.useState("");
+
   const [password, setPassword] = React.useState("");
   const [showPass, setShowPass] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!username || !password) {
-      toast.push("error", t("enterCredentials"));
+    if (!password) {
+      toast.push("error", "Password is required");
       return;
     }
     setLoading(true);
     try {
-      await login(username, password);
+      await loginPassword(password);
       navigate("/");
     } catch (err) {
-      toast.push("error", (err as Error).message);
+      toast.push("error", (err as Error).message || "Invalid password");
     } finally {
       setLoading(false);
     }
   };
 
-  const highlights = [
-    { icon: ShieldCheck, text: t("tlsFeature") },
-    { icon: Globe2, text: t("protocolsFeature") },
-    { icon: Zap, text: t("subPagesFeature") },
-  ];
-
   return (
-    <AuthShell heading={t("welcomeBack")} sub={t("signInPanel")} highlights={highlights}>
-      <form onSubmit={submit} className="space-y-4" noValidate>
-        <div className="space-y-2">
-          <Label htmlFor="username">{t("username")}</Label>
-          <div className="relative">
-            <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text/40" />
-            <Input
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              autoComplete="username"
-              className="pl-9"
-            />
-          </div>
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="password">{t("password")}</Label>
-          <div className="relative">
-            <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text/40" />
-            <Input
+    <AuthShell>
+      <form onSubmit={submit} className="sr-login-form" noValidate>
+        <div style={{ marginBottom: 16 }}>
+          <label htmlFor="password">Password</label>
+          <div style={{ position: "relative" }}>
+            <input
               id="password"
               type={showPass ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               autoComplete="current-password"
-              className="px-9"
+              placeholder="••••••••"
+              style={{ paddingRight: 42 }}
+              autoFocus
             />
             <button
               type="button"
               onClick={() => setShowPass((v) => !v)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-text/40 transition-colors hover:text-text"
               tabIndex={-1}
               aria-label={showPass ? "Hide password" : "Show password"}
+              style={{
+                position: "absolute",
+                right: 10,
+                top: "50%",
+                transform: "translateY(-50%)",
+                background: "transparent",
+                border: "none",
+                color: "rgba(255,255,255,0.4)",
+                cursor: "pointer",
+                padding: 4,
+                display: "flex",
+                alignItems: "center",
+              }}
             >
-              {showPass ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
             </button>
           </div>
         </div>
-        <Button type="submit" className="w-full" disabled={loading}>
-          <LogIn className="h-4 w-4" />
-          {loading ? t("signingIn") : t("signIn")}
-        </Button>
+
+        <button type="submit" disabled={loading}>
+          {loading ? "Signing in..." : "LOGIN"}
+        </button>
       </form>
     </AuthShell>
   );
