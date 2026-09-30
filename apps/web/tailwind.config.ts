@@ -22,25 +22,21 @@ export default {
         secondaryBlack: "#212121",
       },
       borderRadius: {
-        base: "8px",
+        base: "12px",
       },
       boxShadow: {
         shadow: "var(--shadow)",
-        nav: "4px 4px 0px 0px var(--border)",
-      },
-      translate: {
-        boxShadowX: "4px",
-        boxShadowY: "4px",
-        reverseBoxShadowX: "-4px",
-        reverseBoxShadowY: "-4px",
+        glow: "var(--shadow-glow)",
+        nav: "0 4px 16px rgba(0, 0, 0, 0.25)",
       },
       fontWeight: {
         base: "500",
         heading: "800",
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
+        sans: ["Vazirmatn", "Inter", "system-ui", "sans-serif"],
         mono: ["JetBrains Mono", "ui-monospace", "monospace"],
+        heading: ["Cinzel", "Vazirmatn", "serif"],
       },
       keyframes: {
         "accordion-down": {
